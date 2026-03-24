@@ -8,6 +8,7 @@ const PORT=process.env.PORT || 3000;
 
 pool.connect().then(client=>{
     console.log('Connected to the database');
+    client.release();   
 }).catch(err=>{
     console.error('Error connecting to the database',err);
     process.exit(1);
