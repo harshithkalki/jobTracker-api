@@ -34,6 +34,7 @@ export async function login(req:Request, res:Response, next:NextFunction) {
 export async function register(req:Request, res:Response, next:NextFunction) {
     const { email, password,first_name,last_name } = req.body;
     try {
+        console.log(req.body);
     const user= await pool.query(`Select * from users where email=$1`,[email]);
     if (user.rows.length > 0){
         res.status(400).json({ message: "User already exists" });

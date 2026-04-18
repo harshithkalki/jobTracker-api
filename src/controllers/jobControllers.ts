@@ -19,6 +19,7 @@ export async function createJob(req:Request, res:Response, next:NextFunction){
 }
 
 export async function getJobs(req:Request, res:Response, next:NextFunction){
+    
     const user_id=req.user.userId;
     try{
         const result= await pool.query("Select * from jobs where user_id=$1",[user_id]);
@@ -82,6 +83,22 @@ export async function UpdateJobStatus(req:Request, res:Response, next:NextFuncti
         }
     }catch(error){
         console.error("Error updating job status", error);
+        next(error);
+    }
+}
+
+export async function getJobById(req:Request, res:Response, next:NextFunction){
+    const job_Id=req.params.id;
+    const user_id=req.user.userId;
+    try{
+        const result = await pool.query("Select * from jobs where job_id=$1 and user_id=$2",[job_Id,user_id]);
+        if (result.rows.length > 0){
+            res.status(200).json(result.rows[0]);
+        }else{
+            res.status(404).json({message:"Job not found"});
+        }
+    }catch(error){
+        console.error("Error fetching job by id", error);
         next(error);
     }
 }
