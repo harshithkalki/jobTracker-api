@@ -6,7 +6,7 @@ import cors from 'cors';
 
 const app=express();
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173','http://job-tracker-ui.s3-website.us-east-2.amazonaws.com'],
   credentials: true
 }));
 app.use(express.json());
